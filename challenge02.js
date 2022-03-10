@@ -16,18 +16,12 @@ console.log(changeWord('bromo', 'semeru', kalimat2))
 
 const checkTypeNumber = (givenNumber) => {
     if(typeof(givenNumber) == 'number'){
-        if(givenNumber % 2 == 0){
-            return ('Genap')
-        }else {
-            return ('Ganjil')
-        }
-    }else if(typeof(givenNumber) == 'string'){
-        return ('ERROR: Invalid data type')
-    }else if(typeof(givenNumber) == 'object'){
-        return ('ERROR: Invalid data type')
-    }else if(typeof(givenNumber) == 'undefined'){
-        return ('ERROR: Bro where is the parameters?')
+        if(givenNumber % 2 == 0){return ('Genap')}
+        else {return ('Ganjil')}
     }
+    if(typeof(givenNumber) == 'string'){return ('ERROR: Invalid data type')}
+    if(typeof(givenNumber) == 'object'){return ('ERROR: Invalid data type')}
+    if(typeof(givenNumber) == 'undefined'){return ('ERROR: Bro where is the parameters?')}
 }
 
 console.log(checkTypeNumber(10))
@@ -43,22 +37,19 @@ console.log(checkTypeNumber())
 const checkEmail = (email) => {
   let pattern = /^([a-z\d\.-]+)@([a-z\d-]+)\.([a-z]{2,8})(\.[a-z]{2,8})?$/g
   
-  if(typeof(email) == 'number'){
-      return 'ERROR: Email harus berisi tipe data string'
-  }else if(typeof(email) == 'undefined'){
-      return 'ERROR: Email harus terisi'
-  }else {
-    if (email.match(pattern)){
-        return ('VALID')
-      }else{
-        return ('INVALID')
-      }
+  if(typeof(email) == 'number'){return 'ERROR: Email harus berisi tipe data string'}
+  if(typeof(email) == 'undefined'){return 'ERROR: Email harus terisi'}
+  if(!email.includes('@')){return 'ERROR: Email belum terisi penuh'}
+  if(typeof(email) == 'string'){
+    if (pattern.test(email)){return ('VALID')} 
+    else{return ('INVALID')}
   }
 }
 
 console.log(checkEmail('arpranata@binar.co.id'))
 console.log(checkEmail('arpranata@binar.com'))
 console.log(checkEmail('arpranata@binar'))
+console.log(checkEmail('arpranata'))
 console.log(checkEmail(3322))
 console.log(checkEmail())
 
@@ -68,16 +59,11 @@ console.log(checkEmail())
 const isValidPassword = (email) => {
   let passPattern = /^(?=.{8,})(?=.*[A-Z][a-z])(?=.*[0-9]).+$/g
   
-  if(typeof(email) == 'number'){
-      return 'ERROR: Password harus berisi tipe data string'
-  }else if(typeof(email) == 'undefined'){
-      return 'ERROR: Password belum terisi'
-  }else{
-    if (email.match(passPattern)){
-        return(true)
-    }else {
-        return(false)
-    }
+  if(typeof(email) == 'number'){return 'ERROR: Password harus berisi tipe data string'}
+  if(typeof(email) == 'undefined'){return 'ERROR: Password belum terisi'}
+  if(typeof(email) == 'string'){
+    if (email.match(passPattern)){return(true)}
+    else {return(false)}
   }
 }
 
@@ -88,22 +74,19 @@ console.log(isValidPassword('Meong2'))
 console.log(isValidPassword(0))
 console.log(isValidPassword())
 
+
 // <---------------------------------------------- 5. Membagikan Nama ---------------------------------------------->
 
 const getSpillName = (personalName) => {
-    if (typeof(personalName) == 'number'){
-        console.log('Error')
-    }else if (typeof(personalName) == 'string'){ 
+    if (typeof(personalName) == 'number'){return('Error: Data type mus be string')}
+    if(typeof(personalName) == 'string'){ 
         let name = personalName.split(' ')
-        if(name.length == 3){
-            console.log(`{ firstName:  '${name[0]}', middleName: '${name[1]}', lastName: '${name[2]}' }`)
-        }else if(name.length == 2){
-            console.log(`{ firstName:  '${name[0]}', middleName: '${null}', lastName: '${name[1]}' }`)
-        }else if(name.length == 1){
-            console.log(`{ firstName:  '${name[0]}', middleName: '${null}', lastName: '${null}' }`)
-        }else if(name.length <= 4){
-            console.log('Error: This function is only for 3 characters name')
+        switch(name.length){
+            case 3: return(`{ firstName:  '${name[0]}', middleName: '${name[1]}', lastName: '${name[2]}' }`)
+            case 2: return(`{ firstName:  '${name[0]}', middleName: '${null}', lastName: '${name[1]}' }`)
+            case 1: return(`{ firstName:  '${name[0]}', middleName: '${null}', lastName: '${null}' }`)
         }
+        if(name.length <= 4){return('Error: This function is only for 3 characters name')}
     }
 }
 
@@ -214,7 +197,6 @@ const dataPenjualanNovel = [
     const bukuTerlaris = dataPenjualan.reduce((prev, curr) => curr.totalTerjual > (prev.totalTerjual || 0) ? curr : prev.namaProduk)
     const penulisTerlaris = dataPenjualan.reduce((prev, curr) => curr.totalTerjual > (prev.totalTerjual || 0) ? curr : prev.penulis)
     
-
     // Merubah number menjadi rupiah
     const rpTotalModal =  new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(totalModal);
     const rpTotalKeuntungan =  new Intl.NumberFormat("id-ID", {style: "currency", currency: "IDR"}).format(totalJual-totalModal);
